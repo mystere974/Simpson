@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+
+import { useState, useEffect } from 'react';
 import './App.css';
 
+
+
 function App() {
+    
+    const [showQuote, setShowQuote] = useState ([]);
+    const [image, setImage] = useState ()
+    const [character, setCharacter] = useState ()
+    const [simpson, setSimpson] = useState ()
+
+    const buttonValue = () => {
+      fetch(`https://simpsons-quotes-api.herokuapp.com/quotes`)
+        .then(res => res.json())
+        .then(data => (
+          setShowQuote(data[0].quote),
+          setImage(data[0].image),
+          setCharacter(data[0].character)))
+          
+    }
+
+      
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+    <button onClick={() => buttonValue()}>quote</button>
+    <h3>{character}</h3>
+    <p>{showQuote}</p>
+    <img src={image}/>
     </div>
+
   );
 }
 
